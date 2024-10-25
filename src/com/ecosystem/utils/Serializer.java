@@ -37,8 +37,8 @@ public class Serializer {
                 for (Field field : fields) {
                     writer.write(field.get(obj).toString() + ",");
                 }
+                writer.newLine();
             }
-            writer.newLine();
         } catch (IOException | IllegalAccessException e) {
             e.printStackTrace();
         }
