@@ -2,7 +2,6 @@ package com.ecosystem.repo;
 
 import com.ecosystem.models.Animal;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +12,10 @@ public class AnimalRepository {
 
     public AnimalRepository() {
         this.animals = new ArrayList<>();
+    }
+
+    public AnimalRepository(List<Animal> animals) {
+        this.animals = animals;
     }
 
     // C

@@ -3,10 +3,13 @@ package com.ecosystem.models;
 import java.util.UUID;
 
 public class Animal {
-    private final UUID id;
-    private final AnimalSpecies species;
+    private UUID id;
+    private AnimalSpecies species;
     private int age;
     private boolean isAlive;
+
+    public Animal() {
+    }
 
     public Animal(AnimalSpecies species)
     {

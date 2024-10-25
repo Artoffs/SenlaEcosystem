@@ -14,6 +14,10 @@ public class PlantRepository {
         this.plants = new ArrayList<>();
     }
 
+    public PlantRepository(List<Plant> plants) {
+        this.plants = plants;
+    }
+
     public void createPlant(Plant plant) {
         plants.add(plant);
     }

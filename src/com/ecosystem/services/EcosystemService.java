@@ -9,13 +9,20 @@ import java.util.List;
 import java.util.Map;
 
 public class EcosystemService {
-    AnimalRepository animalRepository;
-    PlantRepository plantRepository;
-    ConditionsRepository conditionsRepository;
+    private final AnimalRepository animalRepository;
+    private final PlantRepository plantRepository;
+    private final ConditionsRepository conditionsRepository;
 
     public EcosystemService() {
         this.animalRepository = new AnimalRepository();
         this.plantRepository = new PlantRepository();
+        this.conditionsRepository = new ConditionsRepository();
+    }
+
+    public EcosystemService(List<Animal> animals, List<Plant> plants)
+    {
+        this.animalRepository = new AnimalRepository(animals);
+        this.plantRepository = new PlantRepository(plants);
         this.conditionsRepository = new ConditionsRepository();
     }
 
