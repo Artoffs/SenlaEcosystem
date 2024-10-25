@@ -4,6 +4,7 @@ import com.ecosystem.models.ConditionType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ConditionsRepository {
     private final Map<ConditionType, Double> conditions;
@@ -19,6 +20,13 @@ public class ConditionsRepository {
 
     public Map<ConditionType, Double> getConditions() {
         return conditions;
+    }
+
+    public Map.Entry<ConditionType, Double> getCondition(ConditionType type) {
+        Optional<Map.Entry<ConditionType, Double>> conditionEntry = conditions.entrySet().stream()
+                .filter(entry -> entry.getKey().equals(type))
+                .findFirst();
+        return conditionEntry.orElseThrow();
     }
 
     public void updateCondition(ConditionType type, Double newValue) {

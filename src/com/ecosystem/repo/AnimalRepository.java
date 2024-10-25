@@ -2,8 +2,11 @@ package com.ecosystem.repo;
 
 import com.ecosystem.models.Animal;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class AnimalRepository {
     private final List<Animal> animals;
@@ -19,6 +22,13 @@ public class AnimalRepository {
     }
 
     // R
+    public Animal getAnimal(UUID uuid) {
+        Optional<Animal> optionalAnimal = animals.stream()
+                .filter(animal -> animal.getId().equals(uuid))
+                .findFirst();
+        return optionalAnimal.orElseThrow();
+    }
+
     public List<Animal> getAnimals() {
         return animals;
     }

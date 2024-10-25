@@ -79,6 +79,33 @@
         <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.442;entryY=-0.017;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="TjYJ-jFr5U3Thmlo7Ltg-5" target="TjYJ-jFr5U3Thmlo7Ltg-7">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-27" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Ecosystem&lt;/h1&gt;&lt;div&gt;Класс для работы непосредственно с симуляцией.&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="500" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-28" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Simulation&lt;/h1&gt;&lt;div&gt;Хранит в себе данные о симуляции. То есть предикш сервис и сервис симуляции&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="174" y="500" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-29" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Sim Manager&lt;/h1&gt;&lt;div&gt;Нужен для управления симуляцей. Загрузки старой или создания новой&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="370" y="500" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-30" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;File Handler&lt;/h1&gt;&lt;div&gt;Сериализация и десериализация объектов. Сборка в репозитории и сервисы. На выходе будет отдавать объект класса Simulation&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="550" y="500" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-31" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;PredictionServ&lt;/h1&gt;&lt;div&gt;Будет взаимодействовать с текущим состоянием симуляции и на основе текущих данных будет выдавать прогноз&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="620" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-32" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;SimulationServ&lt;/h1&gt;&lt;div&gt;Непосредственное взаимодействие с репозиториями, условиями и ресурсами экосистемы&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="219" y="630" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-33" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Repository&lt;/h1&gt;&lt;div&gt;Классы-репозитории как коллекции для реализации CRUD операций&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="419" y="650" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-34" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Animal&lt;/h1&gt;&lt;div&gt;Базовое представление животного&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="770" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="TjYJ-jFr5U3Thmlo7Ltg-35" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Plant&lt;/h1&gt;&lt;div&gt;Базовое представление растения&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="180" y="770" width="180" height="120" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

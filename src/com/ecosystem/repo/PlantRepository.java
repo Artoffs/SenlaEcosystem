@@ -4,6 +4,8 @@ import com.ecosystem.models.Plant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class PlantRepository {
     private final List<Plant> plants;
@@ -14,6 +16,13 @@ public class PlantRepository {
 
     public void createPlant(Plant plant) {
         plants.add(plant);
+    }
+
+    public Plant getPlant(UUID uuid) {
+        Optional<Plant> optionalPlant = plants.stream()
+                .filter(plant -> plant.getId().equals(uuid))
+                .findFirst();
+        return optionalPlant.orElseThrow();
     }
 
     public List<Plant> getPlants() {

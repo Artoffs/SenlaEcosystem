@@ -31,6 +31,18 @@ public class EcosystemService {
         conditionsRepository.createCondition(type, value);
     }
 
+    public List<Animal> getAllAnimals() {
+        return animalRepository.getAnimals();
+    }
+
+    public List<Plant> getAllPlants() {
+        return plantRepository.getPlants();
+    }
+
+    public Map<ConditionType, Double> getAllConditions() {
+        return conditionsRepository.getConditions();
+    }
+
     // TODO
     public void simulateInteractions() {
         List<Animal> animals = animalRepository.getAnimals();
