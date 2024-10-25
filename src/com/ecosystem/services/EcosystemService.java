@@ -6,7 +6,6 @@ import com.ecosystem.repo.ConditionsRepository;
 import com.ecosystem.repo.PlantRepository;
 
 import java.util.List;
-import java.util.Map;
 
 public class EcosystemService {
     private final AnimalRepository animalRepository;
@@ -19,11 +18,11 @@ public class EcosystemService {
         this.conditionsRepository = new ConditionsRepository();
     }
 
-    public EcosystemService(List<Animal> animals, List<Plant> plants)
+    public EcosystemService(List<Animal> animals, List<Plant> plants, List<Condition> conditions)
     {
         this.animalRepository = new AnimalRepository(animals);
         this.plantRepository = new PlantRepository(plants);
-        this.conditionsRepository = new ConditionsRepository();
+        this.conditionsRepository = new ConditionsRepository(conditions);
     }
 
     public void addAnimal(AnimalSpecies species) {
@@ -35,7 +34,7 @@ public class EcosystemService {
     }
 
     public void addCondition(ConditionType type, Double value) {
-        conditionsRepository.createCondition(type, value);
+        conditionsRepository.createCondition(new Condition(type, value));
     }
 
     public List<Animal> getAllAnimals() {
@@ -46,7 +45,7 @@ public class EcosystemService {
         return plantRepository.getPlants();
     }
 
-    public Map<ConditionType, Double> getAllConditions() {
+    public List<Condition> getAllConditions() {
         return conditionsRepository.getConditions();
     }
 
@@ -54,6 +53,5 @@ public class EcosystemService {
     public void simulateInteractions() {
         List<Animal> animals = animalRepository.getAnimals();
         List<Plant> plants = plantRepository.getPlants();
-        Map<ConditionType, Double> conditions = conditionsRepository.getConditions();
     }
 }

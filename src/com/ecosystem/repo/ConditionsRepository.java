@@ -1,41 +1,41 @@
 package com.ecosystem.repo;
 
+import com.ecosystem.models.Condition;
 import com.ecosystem.models.ConditionType;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.crypto.Cipher;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class ConditionsRepository {
-    private final Map<ConditionType, Double> conditions;
+    private final List<Condition> conditions;
 
     public ConditionsRepository() {
-        this.conditions = new HashMap<>();
+        this.conditions = new ArrayList<>();
     }
 
-    public void createCondition(ConditionType type, Double value)
-    {
-        conditions.put(type, value);
+    public ConditionsRepository(List<Condition> conditions) {
+        this.conditions = conditions;
     }
 
-    public Map<ConditionType, Double> getConditions() {
+    public void createCondition(Condition condition) {
+        conditions.add(condition);
+    }
+
+    public List<Condition> getConditions() {
         return conditions;
     }
 
-    public Map.Entry<ConditionType, Double> getCondition(ConditionType type) {
-        Optional<Map.Entry<ConditionType, Double>> conditionEntry = conditions.entrySet().stream()
-                .filter(entry -> entry.getKey().equals(type))
+    public Condition getCondition(UUID uuid) {
+        Optional<Condition> optionalCondition = conditions.stream()
+                .filter(condition -> condition.getId().equals(uuid))
                 .findFirst();
-        return conditionEntry.orElseThrow();
+        return optionalCondition.orElseThrow();
     }
 
-    public void updateCondition(ConditionType type, Double newValue) {
-        if(conditions.containsKey(type)) {
-            conditions.put(type, newValue);
-        }
-    }
-
-    public void deleteCondition(ConditionType type) {
-        conditions.remove(type);
+    public void deleteCondition(Condition condition) {
+        conditions.remove(condition);
     }
 }
