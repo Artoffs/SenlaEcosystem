@@ -1,5 +1,6 @@
 package com.ecosystem.repo;
 
+import com.ecosystem.models.Condition;
 import com.ecosystem.models.Resource;
 import com.ecosystem.models.ResourceType;
 
@@ -21,15 +22,27 @@ public class ResourceRepository {
 
     // C
     public void createResource(Resource resource) {
+        Resource newRes;
+        if ((newRes = this.getResource(resource.getType())) != null) {
+            newRes.setValue(resource.getValue());
+            return;
+        }
         resources.add(resource);
     }
 
-    public Resource getResourceValue(UUID id) {
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+
+    public Resource getResource(ResourceType type) {
         Optional<Resource> optionalValue = resources.stream()
-                .filter(resource -> resource.getId().equals(id))
+                .filter(resource -> resource.getType().equals(type))
                 .findFirst();
         return optionalValue.orElseThrow();
     }
 
-    
+    public void deleteResource(Resource resource) {
+        resources.remove(resource);
+    }
 }

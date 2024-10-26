@@ -3,11 +3,9 @@ package com.ecosystem.repo;
 import com.ecosystem.models.Condition;
 import com.ecosystem.models.ConditionType;
 
-import javax.crypto.Cipher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class ConditionsRepository {
     private final List<Condition> conditions;
@@ -21,6 +19,11 @@ public class ConditionsRepository {
     }
 
     public void createCondition(Condition condition) {
+        Condition newCond;
+        if ((newCond = this.getCondition(condition.getType())) != null) {
+            newCond.setValue(condition.getValue());
+            return;
+        }
         conditions.add(condition);
     }
 
@@ -28,9 +31,9 @@ public class ConditionsRepository {
         return conditions;
     }
 
-    public Condition getCondition(UUID uuid) {
+    public Condition getCondition(ConditionType type) {
         Optional<Condition> optionalCondition = conditions.stream()
-                .filter(condition -> condition.getId().equals(uuid))
+                .filter(condition -> condition.getType().equals(type))
                 .findFirst();
         return optionalCondition.orElseThrow();
     }
