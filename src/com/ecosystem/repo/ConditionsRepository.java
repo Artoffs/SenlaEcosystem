@@ -12,6 +12,14 @@ public class ConditionsRepository {
 
     public ConditionsRepository() {
         this.conditions = new ArrayList<>();
+        initializeConditions();
+    }
+
+    private void initializeConditions() {
+        // Добавляем начальные условия в список
+        conditions.add(new Condition(ConditionType.HUMIDITY, 0));
+        conditions.add(new Condition(ConditionType.PRECIPITATION, 10));
+        conditions.add(new Condition(ConditionType.TEMPERATURE, 20));
     }
 
     public ConditionsRepository(List<Condition> conditions) {

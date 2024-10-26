@@ -9,20 +9,20 @@ import com.ecosystem.repo.ResourceRepository;
 import java.util.List;
 import java.util.UUID;
 
-public class EcosystemService {
+public class SimulationService {
     private final AnimalRepository animalRepository;
     private final PlantRepository plantRepository;
     private final ConditionsRepository conditionsRepository;
     private final ResourceRepository resourceRepository;
 
-    public EcosystemService() {
+    public SimulationService() {
         this.animalRepository = new AnimalRepository();
         this.plantRepository = new PlantRepository();
         this.conditionsRepository = new ConditionsRepository();
         this.resourceRepository = new ResourceRepository();
     }
 
-    public EcosystemService(List<Animal> animals, List<Plant> plants, List<Condition> conditions, List<Resource> resources)
+    public SimulationService(List<Animal> animals, List<Plant> plants, List<Condition> conditions, List<Resource> resources)
     {
         this.animalRepository = new AnimalRepository(animals);
         this.plantRepository = new PlantRepository(plants);
