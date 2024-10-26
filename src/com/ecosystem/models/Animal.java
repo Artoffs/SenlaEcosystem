@@ -6,6 +6,7 @@ public class Animal {
     private UUID id;
     private AnimalSpecies species;
     private int age;
+    private double waterConsumption;
     private boolean isAlive;
 
     public Animal() {
@@ -16,6 +17,7 @@ public class Animal {
         this.id = UUID.randomUUID();
         this.species = species;
         this.age = 0;
+        this.waterConsumption = setWaterConsumption(species);
         this.isAlive = true;
     }
 
@@ -33,6 +35,17 @@ public class Animal {
 
     public boolean isAlive() {
         return isAlive;
+    }
+
+    private double setWaterConsumption(AnimalSpecies type) {
+        return switch (type) {
+            case DEER -> 2d;
+            case WOLF -> 1d;
+        };
+    }
+
+    public double getWaterConsumption() {
+        return waterConsumption;
     }
 
     public void die()

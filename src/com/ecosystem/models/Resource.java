@@ -5,7 +5,7 @@ import java.util.UUID;
 public class Resource {
     private UUID id;
     private ResourceType type;
-    private Double value;
+    private double value;
 
     public Resource() {
     }
@@ -34,5 +34,14 @@ public class Resource {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "id=" + id +
+                ", type=" + type +
+                ", value=" + value +
+                '}';
     }
 }

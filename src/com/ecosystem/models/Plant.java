@@ -5,6 +5,7 @@ import java.util.UUID;
 public class Plant {
     private UUID id;
     private PlantSpecies species;
+    private double waterConsumption;
     private int age;
     private boolean isAlive;
 
@@ -15,6 +16,7 @@ public class Plant {
     {
         this.id = UUID.randomUUID();
         this.species = species;
+        this.waterConsumption = setWaterConsumption(species);
         this.age = 0;
         this.isAlive = true;
     }
@@ -33,6 +35,17 @@ public class Plant {
 
     public boolean isAlive() {
         return isAlive;
+    }
+
+    private double setWaterConsumption(PlantSpecies type) {
+        return switch (type) {
+            case SUNFLOWER -> 1d;
+            case TREE -> 3d;
+        };
+    }
+
+    public double getWaterConsumption() {
+        return waterConsumption;
     }
 
     public void grow()
