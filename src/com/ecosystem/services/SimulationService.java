@@ -22,8 +22,7 @@ public class SimulationService {
         this.resourceRepository = new ResourceRepository();
     }
 
-    public SimulationService(List<Animal> animals, List<Plant> plants, List<Condition> conditions, List<Resource> resources)
-    {
+    public SimulationService(List<Animal> animals, List<Plant> plants, List<Condition> conditions, List<Resource> resources) {
         this.animalRepository = new AnimalRepository(animals);
         this.plantRepository = new PlantRepository(plants);
         this.conditionsRepository = new ConditionsRepository(conditions);
@@ -42,6 +41,14 @@ public class SimulationService {
         conditionsRepository.createCondition(condition);
     }
 
+    public void setCondition(ConditionType type, Double value) {
+        conditionsRepository.setCondition(type, value);
+    }
+
+    public void setResource(ResourceType type, Double value) {
+        resourceRepository.setResource(type, value);
+    }
+
     public void addResource(Resource resource) {
         resourceRepository.createResource(resource);
     }
@@ -49,18 +56,33 @@ public class SimulationService {
     public Animal getAnimal(UUID uuid) {
         return animalRepository.getAnimal(uuid);
     }
+
     public Plant getPlant(UUID uuid) {
         return plantRepository.getPlant(uuid);
     }
+
     public Condition getCondition(ConditionType type) {
         return conditionsRepository.getCondition(type);
     }
+
     public Resource getResource(ResourceType type) {
         return resourceRepository.getResource(type);
     }
 
     public List<Animal> getAllAnimals() {
         return animalRepository.getAnimals();
+    }
+
+    public List<Animal> getPredators() {
+        return animalRepository.getAnimals().stream()
+                .filter(animal -> animal.getSpecies().equals(AnimalSpecies.WOLF))
+                .toList();
+    }
+
+    public List<Animal> getHerbivores() {
+        return animalRepository.getAnimals().stream().
+                filter(animal -> animal.getSpecies().equals(AnimalSpecies.DEER)).
+                toList();
     }
 
     public List<Plant> getAllPlants() {

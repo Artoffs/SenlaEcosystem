@@ -49,6 +49,12 @@ public class ResourceRepository {
         return optionalValue.orElseThrow();
     }
 
+    public void setResource(ResourceType type, Double value) {
+        resources.stream()
+                .filter(resource -> resource.getType().equals(type))
+                .forEach(resource -> resource.setValue(value));
+    }
+
     public void deleteResource(Resource resource) {
         resources.remove(resource);
     }

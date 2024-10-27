@@ -46,6 +46,12 @@ public class ConditionsRepository {
         return optionalCondition.orElseThrow();
     }
 
+    public void setCondition(ConditionType type, Double value) {
+        conditions.stream()
+                .filter(condition -> condition.getType().equals(type))
+                .forEach(condition -> condition.setValue(value));
+    }
+
     public void deleteCondition(Condition condition) {
         conditions.remove(condition);
     }

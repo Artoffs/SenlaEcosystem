@@ -19,5 +19,6 @@ public class Ecosystem {
         System.out.println(sim.getAllPlants());
         System.out.println(sim.getFullWaterConsumption());
         System.out.println(sim.getQualityIndex());
+        new Thread(sim).start();
     }
 }

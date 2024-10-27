@@ -15,8 +15,12 @@ public class PredictionService {
     }
 
     public Map<Object, Integer> getPrediction() {
-        List<Animal> predators = simulation.getAllAnimals().stream().filter(animal -> animal.getSpecies().equals(AnimalSpecies.WOLF)).toList();
-        List<Animal> herbivores = simulation.getAllAnimals().stream().filter(animal -> animal.getSpecies().equals(AnimalSpecies.DEER)).toList();
+        List<Animal> predators = simulation.getAllAnimals().stream()
+                .filter(animal -> animal.getSpecies().equals(AnimalSpecies.WOLF))
+                .toList();
+        List<Animal> herbivores = simulation.getAllAnimals().stream().
+                filter(animal -> animal.getSpecies().equals(AnimalSpecies.DEER)).
+                toList();
         List<Plant> allPlants = simulation.getAllPlants();
         return new HashMap<>();
     }
