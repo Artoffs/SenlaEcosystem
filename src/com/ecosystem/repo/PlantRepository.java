@@ -42,8 +42,11 @@ public class PlantRepository {
         }
     }
 
+    public void deleteEatenPlants(List<Plant> eatenPlants) {
+        eatenPlants.forEach(this::deletePlant);
+    }
+
     public void deletePlant(Plant plant) {
         plants.remove(plant);
     }
-
 }

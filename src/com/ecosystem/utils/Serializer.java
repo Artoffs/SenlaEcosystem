@@ -4,9 +4,7 @@ import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Serializer {
 
@@ -43,7 +41,37 @@ public class Serializer {
             e.printStackTrace();
         }
     }
-    public static <T> List<T> readFromFile(String filename, Class<T> cls) {
+
+    public static <K extends Enum<K>, V extends Double> void serialize(Map<K, V> map, String filename) {
+        if (map == null || map.isEmpty()) return;
+
+        try {
+            filename = filename.replace(":", "_");
+            File file = new File(filename);
+            File parent = file.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            // Write headers
+            writer.write("Key,Value");
+            writer.newLine();
+
+            // Write map entries
+            for (Map.Entry<K, V> mapEntry : map.entrySet()) {
+                writer.write(mapEntry.getKey().name() + "," + mapEntry.getValue().toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> List<T> deserializeList(String filename, Class<T> cls) {
         List<T> list = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -77,5 +105,24 @@ public class Serializer {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public static <K extends Enum<K>, V extends Double> Map<K, V> deserializeMap(String filename, Class<K> keyClass) {
+        Map<K, V> map = new EnumMap<>(keyClass);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line = reader.readLine(); // Пропускаем заголовок
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                K key = Enum.valueOf(keyClass, parts[0]);
+                V value = (V) Double.valueOf(parts[1]);
+                map.put(key, value);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return map;
     }
 }

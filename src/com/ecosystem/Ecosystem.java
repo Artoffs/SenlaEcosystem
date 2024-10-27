@@ -11,14 +11,11 @@ public class Ecosystem {
         Scanner scanner = new Scanner(System.in);
 
         Simulation sim = SimulationManager.startNew();
-        sim.addPlant(PlantSpecies.SUNFLOWER);
-        sim.addPlant(PlantSpecies.TREE);
-        sim.addAnimal(AnimalSpecies.DEER);
-        sim.addAnimal(AnimalSpecies.WOLF);
-        System.out.println(sim.getAllAnimals());
-        System.out.println(sim.getAllPlants());
-        System.out.println(sim.getFullWaterConsumption());
-        System.out.println(sim.getQualityIndex());
-        new Thread(sim).start();
+        sim.addAnimal(AnimalSpecies.DEER, 100, 0, 0);
+        sim.addAnimal(AnimalSpecies.WOLF, 100, 1, 0);
+        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
+        sim.run();
+        System.out.println(sim.getSimulationService().getAllAnimals());
+        // SimulationManager.saveCurrentSimulation(sim);
     }
 }

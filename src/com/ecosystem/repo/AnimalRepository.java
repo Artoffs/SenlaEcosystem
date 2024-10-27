@@ -1,6 +1,7 @@
 package com.ecosystem.repo;
 
 import com.ecosystem.models.Animal;
+import com.ecosystem.models.AnimalSpecies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,18 @@ public class AnimalRepository {
         return optionalAnimal.orElseThrow();
     }
 
+    public List<Animal> getHerbivoreAnimals() {
+        return animals.stream()
+                .filter(animal -> animal.getSpecies().equals(AnimalSpecies.DEER))
+                .toList();
+    }
+
+    public List<Animal> getPredatorAnimals() {
+        return animals.stream()
+                .filter(animal -> animal.getSpecies().equals(AnimalSpecies.WOLF))
+                .toList();
+    }
+
     public List<Animal> getAnimals() {
         return animals;
     }
@@ -46,8 +59,16 @@ public class AnimalRepository {
         }
     }
 
+    public void updateAnimals(List<Animal> newAnimals) {
+        this.animals.addAll(newAnimals);
+    }
+
     // D
     public void deleteAnimal(Animal animal) {
         animals.remove(animal);
+    }
+
+    public void deleteDiedAnimals(List<Animal> diedAnimals) {
+        if(!diedAnimals.isEmpty()) diedAnimals.forEach(this::deleteAnimal);
     }
 }

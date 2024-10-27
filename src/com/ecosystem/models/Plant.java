@@ -5,20 +5,25 @@ import java.util.UUID;
 public class Plant {
     private UUID id;
     private PlantSpecies species;
-    private double waterConsumption;
     private int age;
+    private final int health = 10;
+    private double waterConsumption;
     private boolean isAlive;
+    private int positionX;
+    private int positionY;
 
     public Plant() {
     }
 
-    public Plant(PlantSpecies species)
+    public Plant(PlantSpecies species, int positionX, int positionY)
     {
         this.id = UUID.randomUUID();
         this.species = species;
         this.waterConsumption = setWaterConsumption(species);
         this.age = 0;
         this.isAlive = true;
+        this.positionX = positionX;
+        this.positionY = positionY;
     }
 
     public UUID getId() {
@@ -56,6 +61,18 @@ public class Plant {
     public void die()
     {
         isAlive = false;
+    }
+
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     @Override

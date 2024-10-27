@@ -2,31 +2,29 @@ package com.ecosystem.services;
 
 import com.ecosystem.models.*;
 import com.ecosystem.repo.AnimalRepository;
-import com.ecosystem.repo.ConditionsRepository;
+import com.ecosystem.repo.Environment;
 import com.ecosystem.repo.PlantRepository;
-import com.ecosystem.repo.ResourceRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class SimulationService {
     private final AnimalRepository animalRepository;
     private final PlantRepository plantRepository;
-    private final ConditionsRepository conditionsRepository;
-    private final ResourceRepository resourceRepository;
+    private final Environment environment;
 
     public SimulationService() {
         this.animalRepository = new AnimalRepository();
         this.plantRepository = new PlantRepository();
-        this.conditionsRepository = new ConditionsRepository();
-        this.resourceRepository = new ResourceRepository();
+        this.environment = new Environment();
     }
 
-    public SimulationService(List<Animal> animals, List<Plant> plants, List<Condition> conditions, List<Resource> resources) {
+    public SimulationService(List<Animal> animals, List<Plant> plants, Map<ConditionType, Double> conditions, Map<ResourceType, Double> resources) {
         this.animalRepository = new AnimalRepository(animals);
         this.plantRepository = new PlantRepository(plants);
-        this.conditionsRepository = new ConditionsRepository(conditions);
-        this.resourceRepository = new ResourceRepository(resources);
+        this.environment = new Environment(conditions, resources);
     }
 
     public void addAnimal(Animal animal) {
@@ -37,36 +35,12 @@ public class SimulationService {
         plantRepository.createPlant(plant);
     }
 
-    public void addCondition(Condition condition) {
-        conditionsRepository.createCondition(condition);
-    }
-
-    public void setCondition(ConditionType type, Double value) {
-        conditionsRepository.setCondition(type, value);
-    }
-
-    public void setResource(ResourceType type, Double value) {
-        resourceRepository.setResource(type, value);
-    }
-
-    public void addResource(Resource resource) {
-        resourceRepository.createResource(resource);
-    }
-
     public Animal getAnimal(UUID uuid) {
         return animalRepository.getAnimal(uuid);
     }
 
     public Plant getPlant(UUID uuid) {
         return plantRepository.getPlant(uuid);
-    }
-
-    public Condition getCondition(ConditionType type) {
-        return conditionsRepository.getCondition(type);
-    }
-
-    public Resource getResource(ResourceType type) {
-        return resourceRepository.getResource(type);
     }
 
     public List<Animal> getAllAnimals() {
@@ -85,21 +59,75 @@ public class SimulationService {
                 toList();
     }
 
+    public Map<ResourceType, Double> getResources() {
+        return environment.getResources();
+    }
+
+    public Map<ConditionType, Double> getConditions() {
+        return environment.getConditions();
+    }
+
     public List<Plant> getAllPlants() {
         return plantRepository.getPlants();
     }
 
-    public List<Condition> getAllConditions() {
-        return conditionsRepository.getConditions();
+    public void updateConditions() {
+        environment.updateConditions();
     }
 
-    public List<Resource> getAllResources() {
-        return resourceRepository.getResources();
+    public void runHerbivoreAnimalLogic() {
+        List<Animal> newAnimals = new ArrayList<>();
+        List<Plant> eatenPlants = new ArrayList<>();
+
+        for (Animal animal : animalRepository.getHerbivoreAnimals()) {
+            if (animal.isAlive()) {
+                animal.grow();
+                animal.move(environment);
+                Plant eatenPlant = animal.eat(plantRepository.getPlants());
+                if (eatenPlant != null) {
+                    eatenPlants.add(eatenPlant);
+                }
+                animal.drink(environment);
+                animal.reproduce(newAnimals); // Добавляем новую логику размножения
+                if (animal.getHealth() <= 0) {
+                    animal.die();
+                }
+            }
+        }
+
+        synchronized (animalRepository) {
+            animalRepository.updateAnimals(newAnimals); // Добавляем новых животных в популяцию
+        }
+        synchronized (plantRepository) {
+            plantRepository.deleteEatenPlants(eatenPlants); // Удаляем съеденные растения из репозитория
+        }
     }
 
-    // TODO
-    public void simulateInteractions() {
-        List<Animal> animals = animalRepository.getAnimals();
-        List<Plant> plants = plantRepository.getPlants();
+    public void runPredatorLogic() {
+        List<Animal> newAnimals = new ArrayList<>();
+        List<Animal> eatenAnimals = new ArrayList<>();
+
+        for (Animal animal : animalRepository.getPredatorAnimals()) {
+            if (animal.isAlive()) {
+                animal.grow();
+                animal.move(environment);
+                Animal eatenAnimal = animal.predEat(animalRepository.getHerbivoreAnimals());
+                if (eatenAnimal != null) {
+                    eatenAnimals.add(eatenAnimal);
+                }
+                animal.drink(environment);
+                animal.reproduce(newAnimals);
+                if (animal.getHealth() <= 0) {
+                    animal.die();
+                }
+            }
+        }
+
+        synchronized (animalRepository) {
+            animalRepository.updateAnimals(newAnimals); // Добавляем новых животных в популяцию
+            animalRepository.deleteDiedAnimals(eatenAnimals); // Удаляем съеденных животных из репозитория
+        }
     }
+
+
 }
