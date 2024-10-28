@@ -22,6 +22,6 @@ public class HerbivoreSimulation extends Thread {
                 throw new RuntimeException(e);
             }
         }
-        Thread.interrupted();
+        this.interrupt();
     }
 }

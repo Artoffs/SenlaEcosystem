@@ -21,6 +21,6 @@ public class PlantSimulation extends Thread {
                 throw new RuntimeException(e);
             }
         }
-        Thread.interrupted();
+        this.interrupt();
     }
 }

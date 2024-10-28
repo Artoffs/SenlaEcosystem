@@ -14,7 +14,7 @@ public class PredatorSimulation extends Thread {
 
     @Override
     public void run() {
-       while (simulationService.getPredators().isEmpty()){
+       while (!simulationService.getPredators().isEmpty()){
             try {
                 simulationService.runPredatorLogic();
                 TimeUnit.SECONDS.sleep(1);
@@ -22,6 +22,6 @@ public class PredatorSimulation extends Thread {
                 throw new RuntimeException(e);
             }
         }
-        Thread.interrupted();
+        this.interrupt();
     }
 }
