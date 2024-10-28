@@ -1,8 +1,8 @@
 package com.ecosystem.models;
 
 import com.ecosystem.repo.Environment;
+import com.ecosystem.utils.Event;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -91,15 +91,15 @@ public class Animal {
         return eatenAnimal;
     }
 
-    public boolean drink(Environment environment) {
-        if (environment.getResource(ResourceType.WATER) < 0) {
+    public Event drink(Environment environment) {
+        if (environment.getResource(ResourceType.WATER) <= 0) {
             this.die();
-            return false;
+            return new Event(String.format("%s умер от жажды!", this));
         }
-        return true;
+        return new Event(String.format("%s попил!", this));
     }
 
-    public void move(Environment environment) {
+    public Event move(Environment environment) {
         Random random = new Random();
         int moveX = random.nextInt(3) - 1;
         int moveY = random.nextInt(3) - 1;
@@ -111,23 +111,36 @@ public class Animal {
         if (this.positionY < 0) this.positionY = 0;
         if (this.positionX > environment.getWidth()) this.positionX = environment.getWidth();
         if (this.positionY > environment.getHeight()) this.positionY = environment.getHeight();
+
+        return new Event(String.format("%s подвигался на %d по x и на %d по у", this, this.positionX, this.positionY));
     }
 
-    public void reproduce(List<Animal> animals) {
-        if (canReproduce && random.nextInt(100) <= 100) { // 1% шанс на размножение
-            animals.add(new Animal(species, 50, this.positionX, this.positionY));
+    public Event reproduce(List<Animal> animals) {
+        if (canReproduce && random.nextInt(100) <= 10) { // 1% шанс на размножение
+            Animal newAnimal = new Animal(species, 50, this.positionX, this.positionY);
+            animals.add(newAnimal);
+            return new Event(String.format("Появился новый детеныш %s", this.getSpecies()));
         }
+        return new Event("");
     }
 
-    public void grow() {
+    public Event grow() {
         age++;
+
+        if (age > 2 && age < 20) {
+            canReproduce = true;
+            return new Event(this + " теперь может родить");
+        }
         if (age > 20) {
             isAlive = false;
+            return new Event(this + " умер от старости");
         }
+        return new Event(this + " подрос на один годик");
     }
 
-    public void die() {
+    public Event die() {
         isAlive = false;
+        return new Event(this + " умер");
     }
 
     public int getPositionX() {

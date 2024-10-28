@@ -13,12 +13,16 @@ public class Simulation {
 
     private final HerbivoreSimulation herbivoreSimulation;
     private final PredatorSimulation predatorSimulation;
+    private final EnvironmentSimulation environmentSimulation;
+    private final PlantSimulation plantSimulation;
 
     public Simulation(SimulationService simulationService) {
         this.simulationService = simulationService;
         this.predictionService = new PredictionService(this);
         this.herbivoreSimulation = new HerbivoreSimulation(simulationService);
         this.predatorSimulation = new PredatorSimulation(simulationService);
+        this.environmentSimulation = new EnvironmentSimulation(simulationService);
+        this.plantSimulation = new PlantSimulation(simulationService);
     }
 
     public Simulation() {
@@ -26,6 +30,8 @@ public class Simulation {
         this.predictionService = new PredictionService(this);
         this.herbivoreSimulation = new HerbivoreSimulation(simulationService);
         this.predatorSimulation = new PredatorSimulation(simulationService);
+        this.environmentSimulation = new EnvironmentSimulation(simulationService);
+        this.plantSimulation = new PlantSimulation(simulationService);
     }
 
     public void addAnimal(AnimalSpecies type, int health, int posX, int posY) {
@@ -40,12 +46,19 @@ public class Simulation {
 
     }
 
-    public void run() {
+    public void run() throws InterruptedException {
         herbivoreSimulation.start();
         predatorSimulation.start();
+        plantSimulation.start();
+        environmentSimulation.start();
+        herbivoreSimulation.join();
+        predatorSimulation.join();
+        plantSimulation.join();
+        environmentSimulation.join();
     }
 
     public SimulationService getSimulationService() {
         return simulationService;
     }
 }
+

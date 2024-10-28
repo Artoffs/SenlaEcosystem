@@ -4,11 +4,13 @@ import com.ecosystem.models.*;
 import com.ecosystem.repo.AnimalRepository;
 import com.ecosystem.repo.Environment;
 import com.ecosystem.repo.PlantRepository;
+import com.ecosystem.utils.Event;
+import com.ecosystem.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class SimulationService {
     private final AnimalRepository animalRepository;
@@ -33,14 +35,6 @@ public class SimulationService {
 
     public void addPlant(Plant plant) {
         plantRepository.createPlant(plant);
-    }
-
-    public Animal getAnimal(UUID uuid) {
-        return animalRepository.getAnimal(uuid);
-    }
-
-    public Plant getPlant(UUID uuid) {
-        return plantRepository.getPlant(uuid);
     }
 
     public List<Animal> getAllAnimals() {
@@ -75,23 +69,30 @@ public class SimulationService {
         environment.updateConditions();
     }
 
-    public void runHerbivoreAnimalLogic() {
+    public void runHerbivoreAnimalLogic() throws InterruptedException {
         List<Animal> newAnimals = new ArrayList<>();
         List<Plant> eatenPlants = new ArrayList<>();
 
         for (Animal animal : animalRepository.getHerbivoreAnimals()) {
             if (animal.isAlive()) {
-                animal.grow();
-                animal.move(environment);
+                Logger.log(animal.grow());
+                TimeUnit.SECONDS.sleep(1);
+                Logger.log(animal.move(environment));
+                TimeUnit.SECONDS.sleep(1);
                 Plant eatenPlant = animal.eat(plantRepository.getPlants());
+                TimeUnit.SECONDS.sleep(1);
                 if (eatenPlant != null) {
                     eatenPlants.add(eatenPlant);
+                    Logger.log(new Event(animal + " съел "+ eatenPlant));
                 }
-                animal.drink(environment);
-                animal.reproduce(newAnimals); // Добавляем новую логику размножения
+                Logger.log(animal.drink(environment));
+                TimeUnit.SECONDS.sleep(1);
+                Logger.log(animal.reproduce(newAnimals));
+                TimeUnit.SECONDS.sleep(1);// Добавляем новую логику размножения
                 if (animal.getHealth() <= 0) {
-                    animal.die();
+                    Logger.log(animal.die());
                 }
+                TimeUnit.SECONDS.sleep(1);
             }
         }
 
@@ -103,23 +104,30 @@ public class SimulationService {
         }
     }
 
-    public void runPredatorLogic() {
+    public void runPredatorLogic() throws InterruptedException {
         List<Animal> newAnimals = new ArrayList<>();
         List<Animal> eatenAnimals = new ArrayList<>();
 
         for (Animal animal : animalRepository.getPredatorAnimals()) {
             if (animal.isAlive()) {
-                animal.grow();
-                animal.move(environment);
+                Logger.log(animal.grow());
+                TimeUnit.SECONDS.sleep(1);
+                Logger.log(animal.move(environment));
+                TimeUnit.SECONDS.sleep(1);
                 Animal eatenAnimal = animal.predEat(animalRepository.getHerbivoreAnimals());
+                TimeUnit.SECONDS.sleep(1);
                 if (eatenAnimal != null) {
                     eatenAnimals.add(eatenAnimal);
+                    Logger.log(new Event(animal + " съел "+ eatenAnimal));
                 }
-                animal.drink(environment);
+                TimeUnit.SECONDS.sleep(1);
+                Logger.log(animal.drink(environment));
+                TimeUnit.SECONDS.sleep(1);
                 animal.reproduce(newAnimals);
                 if (animal.getHealth() <= 0) {
-                    animal.die();
+                    Logger.log(animal.die());
                 }
+                TimeUnit.SECONDS.sleep(1);
             }
         }
 
@@ -129,5 +137,20 @@ public class SimulationService {
         }
     }
 
+    public void runPlantLogic() throws InterruptedException {
+        List<Plant> newPlants = new ArrayList<>();
+
+        for(Plant plant : plantRepository.getPlants()) {
+            if(plant.isAlive()) {
+                Logger.log(plant.grow());
+                TimeUnit.SECONDS.sleep(1);
+                Logger.log(plant.drink(environment));
+                TimeUnit.SECONDS.sleep(1);
+                Logger.log(plant.reproduce(newPlants));
+                TimeUnit.SECONDS.sleep(1);
+            }
+        }
+        plantRepository.updatePlants(newPlants);
+    }
 
 }

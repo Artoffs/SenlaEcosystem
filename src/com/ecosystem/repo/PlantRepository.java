@@ -1,17 +1,19 @@
 package com.ecosystem.repo;
 
+import com.ecosystem.models.Animal;
 import com.ecosystem.models.Plant;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PlantRepository {
     private final List<Plant> plants;
 
     public PlantRepository() {
-        this.plants = new ArrayList<>();
+        this.plants = new CopyOnWriteArrayList<>();
     }
 
     public PlantRepository(List<Plant> plants) {
@@ -40,6 +42,10 @@ public class PlantRepository {
                 break;
             }
         }
+    }
+
+    public void updatePlants(List<Plant> newPlants) {
+        this.plants.addAll(newPlants);
     }
 
     public void deleteEatenPlants(List<Plant> eatenPlants) {

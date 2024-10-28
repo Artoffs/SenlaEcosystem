@@ -3,16 +3,14 @@ package com.ecosystem.repo;
 import com.ecosystem.models.Animal;
 import com.ecosystem.models.AnimalSpecies;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AnimalRepository {
     private final List<Animal> animals;
 
     public AnimalRepository() {
-        this.animals = new ArrayList<>();
+        this.animals = new CopyOnWriteArrayList<>();
     }
 
     public AnimalRepository(List<Animal> animals) {

@@ -4,24 +4,22 @@ import com.ecosystem.services.SimulationService;
 
 import java.util.concurrent.TimeUnit;
 
-public class PredatorSimulation extends Thread {
-
+public class EnvironmentSimulation extends Thread {
     private final SimulationService simulationService;
 
-    public PredatorSimulation(SimulationService simulationService) {
+    public EnvironmentSimulation(SimulationService simulationService) {
         this.simulationService = simulationService;
     }
 
     @Override
     public void run() {
-       while (simulationService.getPredators().isEmpty()){
+        for (int i = 0; i < 10; i++) {
+            simulationService.updateConditions();
             try {
-                simulationService.runPredatorLogic();
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(15);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-        Thread.interrupted();
     }
 }
