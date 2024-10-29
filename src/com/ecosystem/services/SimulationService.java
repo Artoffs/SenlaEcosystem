@@ -69,6 +69,14 @@ public class SimulationService {
         environment.updateConditions();
     }
 
+    public int getWidthEnv() {
+        return environment.getWidth();
+    }
+
+    public int getHeightEnv() {
+        return environment.getHeight();
+    }
+
     public Double getWaterConsumption() {
         Double animalCons = animalRepository.getAnimals().stream().mapToDouble(Animal::getWaterConsumption).sum();
         Double plantCons = plantRepository.getPlants().stream().mapToDouble(Plant::getWaterConsumption).sum();
@@ -92,6 +100,7 @@ public class SimulationService {
                     Logger.log(new Event(animal + " съел " + eatenPlant));
                 }
                 Logger.log(animal.drink(environment));
+                if (!animal.isAlive()) continue;
                 TimeUnit.SECONDS.sleep(1);
                 Logger.log(animal.reproduce(newAnimals));
                 TimeUnit.SECONDS.sleep(1);// Добавляем новую логику размножения

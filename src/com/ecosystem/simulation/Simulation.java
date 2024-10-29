@@ -54,16 +54,24 @@ public class Simulation {
         Thread plantThread = new Thread(plantSimulation);
         plantThread.start();
         Thread envThread = new Thread(environmentSimulation);
-        envThread.start();
+        //envThread.start();
 
         herbThread.join();
         predThread.join();
         plantThread.join();
-        envThread.join();
+        //envThread.join();
     }
 
     public SimulationService getSimulationService() {
         return simulationService;
+    }
+
+    public int getWidthEnv() {
+        return simulationService.getWidthEnv();
+    }
+
+    public int getHeightEnv() {
+        return simulationService.getHeightEnv();
     }
 }
 
