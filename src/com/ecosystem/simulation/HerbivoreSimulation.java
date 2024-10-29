@@ -4,7 +4,7 @@ import com.ecosystem.services.SimulationService;
 
 import java.util.concurrent.TimeUnit;
 
-public class HerbivoreSimulation extends Thread {
+public class HerbivoreSimulation implements Runnable {
 
     private final SimulationService simulationService;
 
@@ -22,6 +22,5 @@ public class HerbivoreSimulation extends Thread {
                 throw new RuntimeException(e);
             }
         }
-        this.interrupt();
     }
 }

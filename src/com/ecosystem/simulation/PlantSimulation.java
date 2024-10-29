@@ -4,7 +4,7 @@ import com.ecosystem.services.SimulationService;
 
 import java.util.concurrent.TimeUnit;
 
-public class PlantSimulation extends Thread {
+public class PlantSimulation implements Runnable {
     private final SimulationService simulationService;
 
     public PlantSimulation(SimulationService simulationService) {
@@ -13,7 +13,7 @@ public class PlantSimulation extends Thread {
 
     @Override
     public void run() {
-        while(!simulationService.getAllPlants().isEmpty()) {
+        while (!simulationService.getAllPlants().isEmpty()) {
             try {
                 simulationService.runPlantLogic();
                 TimeUnit.SECONDS.sleep(1);
@@ -21,6 +21,5 @@ public class PlantSimulation extends Thread {
                 throw new RuntimeException(e);
             }
         }
-        this.interrupt();
     }
 }

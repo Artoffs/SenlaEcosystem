@@ -12,16 +12,13 @@ public class Ecosystem {
 
         Simulation sim = SimulationManager.startNew();
         System.out.println(sim.getSimulationService().getResources());
-        sim.addAnimal(AnimalSpecies.DEER, 100, 0, 0);
         sim.addAnimal(AnimalSpecies.WOLF, 100, 0, 0);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
+        sim.addAnimal(AnimalSpecies.WOLF, 100, 0, 0);
+        sim.addAnimal(AnimalSpecies.DEER, 100, 0, 1);
+        sim.addAnimal(AnimalSpecies.DEER, 100, 0, 2);
+        sim.addAnimal(AnimalSpecies.DEER, 100, 0, 3);
+        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 0);
+        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 0);
         try {
             sim.run();
         } catch (InterruptedException e) {

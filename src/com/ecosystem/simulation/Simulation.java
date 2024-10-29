@@ -47,14 +47,19 @@ public class Simulation {
     }
 
     public void run() throws InterruptedException {
-        herbivoreSimulation.start();
-        predatorSimulation.start();
-        plantSimulation.start();
-        environmentSimulation.start();
-        herbivoreSimulation.join();
-        predatorSimulation.join();
-        plantSimulation.join();
-        environmentSimulation.join();
+        Thread herbThread = new Thread(herbivoreSimulation);
+        herbThread.start();
+        Thread predThread = new Thread(predatorSimulation);
+        predThread.start();
+        Thread plantThread = new Thread(plantSimulation);
+        plantThread.start();
+        Thread envThread = new Thread(environmentSimulation);
+        envThread.start();
+
+        herbThread.join();
+        predThread.join();
+        plantThread.join();
+        envThread.join();
     }
 
     public SimulationService getSimulationService() {

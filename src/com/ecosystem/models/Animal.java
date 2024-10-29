@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * Базовое представление сущности животного
+ */
+
 public class Animal {
     private UUID id;
     private AnimalSpecies species;
@@ -92,10 +96,11 @@ public class Animal {
     }
 
     public Event drink(Environment environment) {
-        if (environment.getResource(ResourceType.WATER) <= 0) {
+        if (environment.getResource(ResourceType.WATER) < waterConsumption) {
             this.die();
             return new Event(String.format("%s умер от жажды!", this));
         }
+        environment.updateResource(ResourceType.WATER, -waterConsumption);
         return new Event(String.format("%s попил!", this));
     }
 

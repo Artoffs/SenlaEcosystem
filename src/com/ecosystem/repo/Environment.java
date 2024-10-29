@@ -38,14 +38,14 @@ public class Environment {
         Logger.log(updateCondition(ConditionType.TEMPERATURE, random.nextDouble(3) - 1));
         Logger.log(updateCondition(ConditionType.HUMIDITY, random.nextDouble(3) - 1));
         Logger.log(updateCondition(ConditionType.PRECIPITATION, random.nextDouble(3) - 1));
-        Logger.log(updateResource(ResourceType.WATER, random.nextDouble(getCondition(ConditionType.PRECIPITATION)) - 5));
+        Logger.log(updateResource(ResourceType.WATER, random.nextDouble(getCondition(ConditionType.PRECIPITATION)) - 3));
 
         if(getResource(ResourceType.WATER) < 0) setResource(ResourceType.WATER, 0d);
         if(getCondition(ConditionType.TEMPERATURE) < 0) setCondition(ConditionType.TEMPERATURE, 0d);
-        if(getCondition(ConditionType.TEMPERATURE) > 30) setCondition(ConditionType.TEMPERATURE, 30d);
+        if(getCondition(ConditionType.TEMPERATURE) > 40) setCondition(ConditionType.TEMPERATURE, 40d);
         if(getCondition(ConditionType.HUMIDITY) < 0) setCondition(ConditionType.HUMIDITY, 0d);
         if(getCondition(ConditionType.HUMIDITY) > 100) setCondition(ConditionType.HUMIDITY, 100d);
-        if(getCondition(ConditionType.PRECIPITATION) < 0) setCondition(ConditionType.HUMIDITY, 0d);
+        if(getCondition(ConditionType.PRECIPITATION) < 1) setCondition(ConditionType.HUMIDITY, 1d);
         if(getCondition(ConditionType.PRECIPITATION) > 15) setCondition(ConditionType.HUMIDITY, 15d);
 
     }

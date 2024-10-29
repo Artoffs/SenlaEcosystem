@@ -69,6 +69,12 @@ public class SimulationService {
         environment.updateConditions();
     }
 
+    public Double getWaterConsumption() {
+        Double animalCons = animalRepository.getAnimals().stream().mapToDouble(Animal::getWaterConsumption).sum();
+        Double plantCons = plantRepository.getPlants().stream().mapToDouble(Plant::getWaterConsumption).sum();
+        return animalCons + plantCons;
+    }
+
     public void runHerbivoreAnimalLogic() throws InterruptedException {
         List<Animal> newAnimals = new ArrayList<>();
         List<Plant> eatenPlants = new ArrayList<>();
