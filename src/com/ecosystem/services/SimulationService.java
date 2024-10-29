@@ -89,7 +89,7 @@ public class SimulationService {
                 TimeUnit.SECONDS.sleep(1);
                 if (eatenPlant != null) {
                     eatenPlants.add(eatenPlant);
-                    Logger.log(new Event(animal + " съел "+ eatenPlant));
+                    Logger.log(new Event(animal + " съел " + eatenPlant));
                 }
                 Logger.log(animal.drink(environment));
                 TimeUnit.SECONDS.sleep(1);
@@ -102,12 +102,9 @@ public class SimulationService {
             }
         }
 
-        synchronized (animalRepository) {
-            animalRepository.updateAnimals(newAnimals); // Добавляем новых животных в популяцию
-        }
-        synchronized (plantRepository) {
-            plantRepository.deleteEatenPlants(eatenPlants); // Удаляем съеденные растения из репозитория
-        }
+        animalRepository.updateAnimals(newAnimals); // Добавляем новых животных в популяцию
+        plantRepository.deleteEatenPlants(eatenPlants); // Удаляем съеденные растения из репозитория
+
     }
 
     public void runPredatorLogic() throws InterruptedException {
@@ -124,7 +121,7 @@ public class SimulationService {
                 TimeUnit.SECONDS.sleep(1);
                 if (eatenAnimal != null) {
                     eatenAnimals.add(eatenAnimal);
-                    Logger.log(new Event(animal + " съел "+ eatenAnimal));
+                    Logger.log(new Event(animal + " съел " + eatenAnimal));
                 }
                 TimeUnit.SECONDS.sleep(1);
                 Logger.log(animal.drink(environment));
@@ -137,17 +134,15 @@ public class SimulationService {
             }
         }
 
-        synchronized (animalRepository) {
-            animalRepository.updateAnimals(newAnimals); // Добавляем новых животных в популяцию
-            animalRepository.deleteDiedAnimals(eatenAnimals); // Удаляем съеденных животных из репозитория
-        }
+        animalRepository.updateAnimals(newAnimals); // Добавляем новых животных в популяцию
+        animalRepository.deleteDiedAnimals(eatenAnimals); // Удаляем съеденных животных из репозитория
     }
 
     public void runPlantLogic() throws InterruptedException {
         List<Plant> newPlants = new ArrayList<>();
 
-        for(Plant plant : plantRepository.getPlants()) {
-            if(plant.isAlive()) {
+        for (Plant plant : plantRepository.getPlants()) {
+            if (plant.isAlive()) {
                 Logger.log(plant.grow());
                 TimeUnit.SECONDS.sleep(1);
                 Logger.log(plant.drink(environment));

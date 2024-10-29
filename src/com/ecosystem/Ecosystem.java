@@ -17,8 +17,8 @@ public class Ecosystem {
         sim.addAnimal(AnimalSpecies.DEER, 100, 0, 1);
         sim.addAnimal(AnimalSpecies.DEER, 100, 0, 2);
         sim.addAnimal(AnimalSpecies.DEER, 100, 0, 3);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 0);
-        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 0);
+        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
+        sim.addPlant(PlantSpecies.SUNFLOWER, 1, 1);
         try {
             sim.run();
         } catch (InterruptedException e) {

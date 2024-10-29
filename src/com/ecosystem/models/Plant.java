@@ -79,10 +79,10 @@ public class Plant {
     }
 
     public Event reproduce(List<Plant> plants) {
-        if (random.nextInt(100) <= 10) { // 1% шанс на размножение
+        if (random.nextInt(100) <= 10) { // 10% шанс на размножение
             Plant newPlant = new Plant(species, (random.nextInt(this.positionX+1)) - 3, (random.nextInt(this.positionY+1)) - 3);
             plants.add(newPlant);
-            return new Event(String.format("Появился новое растение %s", species));
+            return new Event(String.format("Появилось новое растение %s", species));
         }
         return new Event("");
     }
