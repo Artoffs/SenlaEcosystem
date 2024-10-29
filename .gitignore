@@ -6,6 +6,7 @@ out/
 simulations
 logfile.txt
 sources.txt
+*.drawio
 
 ### Eclipse ###
 .apt_generated
