@@ -7,34 +7,61 @@ import com.ecosystem.repo.PlantRepository;
 import com.ecosystem.utils.Event;
 import com.ecosystem.utils.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class SimulationService {
     private final AnimalRepository animalRepository;
     private final PlantRepository plantRepository;
     private final Environment environment;
+    private final Random random;
 
     public SimulationService() {
         this.animalRepository = new AnimalRepository();
         this.plantRepository = new PlantRepository();
         this.environment = new Environment();
+        this.random = new Random();
     }
 
     public SimulationService(List<Animal> animals, List<Plant> plants, Map<ConditionType, Double> conditions, Map<ResourceType, Double> resources) {
         this.animalRepository = new AnimalRepository(animals);
         this.plantRepository = new PlantRepository(plants);
         this.environment = new Environment(conditions, resources);
+        this.random = new Random();
     }
 
     public void addAnimal(Animal animal) {
         animalRepository.createAnimal(animal);
     }
 
+    public boolean deleteAnimal(UUID uuid) {
+        Animal animal = getAnimal(uuid);
+        if (animal != null) {
+            animalRepository.deleteAnimal(animal);
+            return true;
+        }
+        return false;
+    }
+
     public void addPlant(Plant plant) {
         plantRepository.createPlant(plant);
+    }
+
+    public boolean deletePlant(UUID uuid) {
+        Plant plant = getPlant(uuid);
+        if (plant != null) {
+            plantRepository.deletePlant(plant);
+            return true;
+        }
+        return false;
+    }
+
+    public Animal getAnimal(UUID uuid) {
+        return animalRepository.getAnimal(uuid);
+    }
+
+    public Plant getPlant(UUID uuid) {
+        return plantRepository.getPlant(uuid);
     }
 
     public List<Animal> getAllAnimals() {
@@ -65,8 +92,16 @@ public class SimulationService {
         return plantRepository.getPlants();
     }
 
-    public void updateConditions() {
+    public void updateConditions() throws InterruptedException {
         environment.updateConditions();
+    }
+
+    public void updateCondition(ConditionType type, Double value) {
+        environment.setCondition(type, value);
+    }
+
+    public void updateResource(ResourceType type, Double value) {
+        environment.setResource(type, value);
     }
 
     public int getWidthEnv() {
@@ -102,12 +137,14 @@ public class SimulationService {
                 Logger.log(animal.drink(environment));
                 if (!animal.isAlive()) continue;
                 TimeUnit.SECONDS.sleep(1);
-                Logger.log(animal.reproduce(newAnimals));
+                Logger.log(animal.reproduce(newAnimals, random));
                 TimeUnit.SECONDS.sleep(1);// Добавляем новую логику размножения
                 if (animal.getHealth() <= 0) {
                     Logger.log(animal.die());
                 }
                 TimeUnit.SECONDS.sleep(1);
+            } else {
+                animalRepository.deleteAnimal(animal);
             }
         }
 
@@ -135,11 +172,13 @@ public class SimulationService {
                 TimeUnit.SECONDS.sleep(1);
                 Logger.log(animal.drink(environment));
                 TimeUnit.SECONDS.sleep(1);
-                animal.reproduce(newAnimals);
+                Logger.log(animal.reproduce(newAnimals, random));
                 if (animal.getHealth() <= 0) {
                     Logger.log(animal.die());
                 }
                 TimeUnit.SECONDS.sleep(1);
+            } else {
+                animalRepository.deleteAnimal(animal);
             }
         }
 
@@ -156,8 +195,10 @@ public class SimulationService {
                 TimeUnit.SECONDS.sleep(1);
                 Logger.log(plant.drink(environment));
                 TimeUnit.SECONDS.sleep(1);
-                Logger.log(plant.reproduce(newPlants));
+                Logger.log(plant.reproduce(newPlants, random));
                 TimeUnit.SECONDS.sleep(1);
+            } else {
+                plantRepository.deletePlant(plant);
             }
         }
         plantRepository.updatePlants(newPlants);

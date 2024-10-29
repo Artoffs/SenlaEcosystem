@@ -24,7 +24,7 @@ public class Environment {
         conditions.put(ConditionType.TEMPERATURE, 20d);
         conditions.put(ConditionType.PRECIPITATION, 10d);
         conditions.put(ConditionType.HUMIDITY, 60d);
-        resources.put(ResourceType.WATER, 0d);
+        resources.put(ResourceType.WATER, 800d);
         this.random = new Random();
     }
 

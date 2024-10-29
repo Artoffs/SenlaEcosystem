@@ -21,7 +21,6 @@ public class Animal {
     private boolean canReproduce;
     private int positionX;
     private int positionY;
-    private static final Random random = new Random();
 
     public Animal() {
     }
@@ -44,10 +43,6 @@ public class Animal {
 
     public AnimalSpecies getSpecies() {
         return species;
-    }
-
-    public int getAge() {
-        return age;
     }
 
     public boolean isAlive() {
@@ -117,10 +112,10 @@ public class Animal {
         if (this.positionX > environment.getWidth()) this.positionX = environment.getWidth();
         if (this.positionY > environment.getHeight()) this.positionY = environment.getHeight();
 
-        return new Event(String.format("%s подвигался на %d по x и на %d по у", this, this.positionX, this.positionY));
+        return new Event(String.format("%s подвигался на %d по x и на %d по у", this, moveX, moveY));
     }
 
-    public Event reproduce(List<Animal> animals) {
+    public Event reproduce(List<Animal> animals, Random random) {
         if (canReproduce && random.nextInt(100) <= 10) { // 1% шанс на размножение
             Animal newAnimal = new Animal(species, 50, this.positionX, this.positionY);
             animals.add(newAnimal);
@@ -140,7 +135,7 @@ public class Animal {
             isAlive = false;
             return new Event(this + " умер от старости");
         }
-        return new Event(this + " подрос на один годик");
+        return new Event(this + " старше на 1 день");
     }
 
     public Event die() {

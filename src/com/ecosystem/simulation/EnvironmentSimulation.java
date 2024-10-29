@@ -14,9 +14,9 @@ public class EnvironmentSimulation implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 10; i++) {
-            simulationService.updateConditions();
-            System.out.println(simulationService.getResources());
             try {
+                simulationService.updateConditions();
+                System.out.println(simulationService.getResources());
                 TimeUnit.SECONDS.sleep(15);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

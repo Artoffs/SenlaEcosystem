@@ -5,6 +5,7 @@ import com.ecosystem.services.PredictionService;
 import com.ecosystem.services.SimulationService;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class Simulation {
     private final SimulationService simulationService;
@@ -38,12 +39,36 @@ public class Simulation {
         simulationService.addAnimal(new Animal(type, health, posX, posY));
     }
 
+    public Animal getAnimal(UUID uuid) {
+        return simulationService.getAnimal(uuid);
+    }
+
+    public boolean deleteAnimal(UUID uuid) {
+        return simulationService.deleteAnimal(uuid);
+    }
+
+    public boolean deletePlant(UUID uuid) {
+        return simulationService.deletePlant(uuid);
+    }
+
     public void addPlant(PlantSpecies type, int posX, int posY) {
         simulationService.addPlant(new Plant(type, posX, posY));
     }
 
-    public void setCondition(ConditionType type, Double value) {
+    public void getPrediction() {
+        predictionService.getPrediction();
+    }
 
+    public Plant getPlant(UUID uuid) {
+        return simulationService.getPlant(uuid);
+    }
+
+    public void setCondition(ConditionType type, Double value) {
+        simulationService.updateCondition(type, value);
+    }
+
+    public void setResource(ResourceType type, Double value) {
+        simulationService.updateResource(type, value);
     }
 
     public void run() throws InterruptedException {
@@ -54,12 +79,12 @@ public class Simulation {
         Thread plantThread = new Thread(plantSimulation);
         plantThread.start();
         Thread envThread = new Thread(environmentSimulation);
-        //envThread.start();
+       envThread.start();
 
         herbThread.join();
         predThread.join();
         plantThread.join();
-        //envThread.join();
+        envThread.join();
     }
 
     public SimulationService getSimulationService() {

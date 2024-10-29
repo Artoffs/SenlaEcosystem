@@ -15,7 +15,7 @@ public class PredictionService {
         this.simulation = simulation;
     }
 
-    public Event getPrediction() {
+    public void getPrediction() {
         String prediction = "";
         SimulationService simulationService = simulation.getSimulationService();
         Map<ConditionType, Double> conditions = simulationService.getConditions();
@@ -38,6 +38,6 @@ public class PredictionService {
         if (resources.get(ResourceType.WATER) / 3 < simulationService.getWaterConsumption()) {
             prediction += "ОПАСТНОСТЬ: В вашей экосистеме очень мало воды\n";
         }
-        return new Event(prediction);
+        System.out.println(prediction.isEmpty() ? "Экосистема должна быть стабильна" : prediction);
     }
 }

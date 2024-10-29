@@ -8,9 +8,9 @@ import java.util.*;
 
 public class Serializer {
 
-    public static <T> void serialize(List<T> list, String filename) {
-        if (list == null || list.isEmpty()) return;
+    @SuppressWarnings("unchecked")
 
+    public static <T> void serialize(List<T> list, String filename) {
         try {
             filename = filename.replace(":", "_");
             File file = new File(filename);
@@ -18,24 +18,24 @@ public class Serializer {
             if (parent != null && !parent.exists()) {
                 parent.mkdirs();
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            Class<?> cls = list.getFirst().getClass();
-            Field[] fields = cls.getDeclaredFields();
-
-            for (Field field : fields) {
-                field.setAccessible(true);
-                writer.write(field.getName() + ",");
-            }
-            writer.newLine();
-
-            for (T obj : list) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                if (list == null || list.isEmpty()) {
+                    return;
+                }
+                Class<?> cls = list.get(0).getClass();
+                Field[] fields = cls.getDeclaredFields();
                 for (Field field : fields) {
-                    writer.write(field.get(obj).toString() + ",");
+                    field.setAccessible(true);
+                    writer.write(field.getName() + ",");
                 }
                 writer.newLine();
+                for (T obj : list) {
+                    for (Field field : fields) {
+                        field.setAccessible(true);
+                        writer.write(field.get(obj).toString() + ",");
+                    }
+                    writer.newLine();
+                }
             }
         } catch (IOException | IllegalAccessException e) {
             e.printStackTrace();
@@ -71,6 +71,8 @@ public class Serializer {
         }
     }
 
+    @SuppressWarnings("unchecked")
+
     public static <T> List<T> deserializeList(String filename, Class<T> cls) {
         List<T> list = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -78,13 +80,13 @@ public class Serializer {
             Field[] fields = cls.getDeclaredFields();
             reader.readLine();
 
-            while((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 Constructor<T> constructor = cls.getConstructor();
                 T obj = constructor.newInstance();
                 for (int i = 0; i < fields.length; i++) {
                     fields[i].setAccessible(true);
-                    if(fields[i].getType() == int.class) {
+                    if (fields[i].getType() == int.class) {
                         fields[i].set(obj, Integer.parseInt(parts[i]));
                     } else if (fields[i].getType() == double.class) {
                         fields[i].set(obj, Double.parseDouble(parts[i]));
@@ -98,7 +100,7 @@ public class Serializer {
                         fields[i].set(obj, parts[i]);
                     }
                 }
-            list.add(obj);
+                list.add(obj);
             }
         } catch (IOException | NoSuchMethodException | InstantiationException | InvocationTargetException |
                  IllegalAccessException e) {
@@ -106,6 +108,8 @@ public class Serializer {
         }
         return list;
     }
+
+    @SuppressWarnings("unchecked")
 
     public static <K extends Enum<K>, V extends Double> Map<K, V> deserializeMap(String filename, Class<K> keyClass) {
         Map<K, V> map = new EnumMap<>(keyClass);

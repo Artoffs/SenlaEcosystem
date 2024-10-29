@@ -20,7 +20,6 @@ public class Plant {
     private boolean isAlive;
     private int positionX;
     private int positionY;
-    private static final Random random = new Random();
 
     public Plant() {
     }
@@ -44,10 +43,6 @@ public class Plant {
         return species;
     }
 
-    public int getAge() {
-        return age;
-    }
-
     public boolean isAlive() {
         return isAlive;
     }
@@ -55,7 +50,6 @@ public class Plant {
     private double setWaterConsumption(PlantSpecies type) {
         return switch (type) {
             case SUNFLOWER -> 1d;
-            case TREE -> 3d;
         };
     }
 
@@ -78,7 +72,7 @@ public class Plant {
         return new Event(String.format("%s потребил воду!", this));
     }
 
-    public Event reproduce(List<Plant> plants) {
+    public Event reproduce(List<Plant> plants, Random random) {
         if (random.nextInt(100) <= 10) { // 10% шанс на размножение
             Plant newPlant = new Plant(species, (random.nextInt(this.positionX+1)) - 3, (random.nextInt(this.positionY+1)) - 3);
             plants.add(newPlant);

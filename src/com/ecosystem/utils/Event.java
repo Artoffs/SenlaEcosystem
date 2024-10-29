@@ -1,9 +1,10 @@
 package com.ecosystem.utils;
 
-import java.util.UUID;
+
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 public class Event {
-    private UUID id;
     private final String description;
 
     public Event(String description) {
@@ -11,6 +12,6 @@ public class Event {
     }
 
     public String getDescription() {
-        return description;
+        return LocalTime.now().truncatedTo(ChronoUnit.SECONDS) + " " + description;
     }
 }
