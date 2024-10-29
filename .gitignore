@@ -5,6 +5,7 @@ out/
 .idea
 simulations
 logfile.txt
+sources.txt
 
 ### Eclipse ###
 .apt_generated
