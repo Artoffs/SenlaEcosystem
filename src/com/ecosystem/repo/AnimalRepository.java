@@ -6,6 +6,11 @@ import com.ecosystem.models.AnimalSpecies;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Класс-репозиторий для сущности животного. Тут реализуются CRUD операции
+ */
+
+
 public class AnimalRepository {
     private final List<Animal> animals;
 

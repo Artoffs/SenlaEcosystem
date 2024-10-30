@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Класс, который хранит ресурсы и условия экосистемы.
+ */
+
 public class Environment {
     private final Map<ConditionType, Double> conditions;
     private final Map<ResourceType, Double> resources;

@@ -4,6 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Класс, который производит вывод событий в консоль и запись в файл
+ */
+
 public class Logger {
     private static PrintWriter fileWriter;
 

@@ -3,7 +3,6 @@ package com.ecosystem.services;
 import com.ecosystem.models.ConditionType;
 import com.ecosystem.models.ResourceType;
 import com.ecosystem.simulation.Simulation;
-import com.ecosystem.utils.Event;
 
 import java.util.Map;
 

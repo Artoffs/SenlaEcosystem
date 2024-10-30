@@ -10,6 +10,11 @@ import com.ecosystem.utils.Logger;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Класс-сервис для симуляции. Содержит в себе классы репозитории, позволяет
+ * управлять экосистемой.
+ */
+
 public class SimulationService {
     private final AnimalRepository animalRepository;
     private final PlantRepository plantRepository;
@@ -138,7 +143,7 @@ public class SimulationService {
                 if (!animal.isAlive()) continue;
                 TimeUnit.SECONDS.sleep(1);
                 Logger.log(animal.reproduce(newAnimals, random));
-                TimeUnit.SECONDS.sleep(1);// Добавляем новую логику размножения
+                TimeUnit.SECONDS.sleep(1);
                 if (animal.getHealth() <= 0) {
                     Logger.log(animal.die());
                 }

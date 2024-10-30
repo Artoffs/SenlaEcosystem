@@ -4,6 +4,10 @@ import com.ecosystem.services.SimulationService;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Класс, реализующий интерфейс Runnable. Поток изменения условий экосистемы.
+ */
+
 public class EnvironmentSimulation implements Runnable {
     private final SimulationService simulationService;
 

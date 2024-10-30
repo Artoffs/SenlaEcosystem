@@ -6,6 +6,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+/**
+ * Класс, служащий для сериализации животных, растений и условий экосистеме. Сделан с применением Reflection API
+ */
+
 public class Serializer {
 
     @SuppressWarnings("unchecked")
@@ -57,11 +61,9 @@ public class Serializer {
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            // Write headers
             writer.write("Key,Value");
             writer.newLine();
 
-            // Write map entries
             for (Map.Entry<K, V> mapEntry : map.entrySet()) {
                 writer.write(mapEntry.getKey().name() + "," + mapEntry.getValue().toString());
                 writer.newLine();
@@ -72,7 +74,6 @@ public class Serializer {
     }
 
     @SuppressWarnings("unchecked")
-
     public static <T> List<T> deserializeList(String filename, Class<T> cls) {
         List<T> list = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -110,7 +111,6 @@ public class Serializer {
     }
 
     @SuppressWarnings("unchecked")
-
     public static <K extends Enum<K>, V extends Double> Map<K, V> deserializeMap(String filename, Class<K> keyClass) {
         Map<K, V> map = new EnumMap<>(keyClass);
 

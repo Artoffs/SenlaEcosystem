@@ -1,7 +1,6 @@
 package com.ecosystem;
 
 import com.ecosystem.models.*;
-import com.ecosystem.services.SimulationService;
 import com.ecosystem.simulation.Simulation;
 import com.ecosystem.simulation.SimulationManager;
 import com.ecosystem.utils.Logger;
@@ -10,7 +9,11 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.UUID;
 
-public class Ecosystem {
+/**
+ * Класс, предоставляющий пользовательский интерфейс для взаимодействия с экосистемой.
+ */
+
+public class EcosystemApp {
 
     private static Simulation currentSimulation;
     private static final Random random = new Random();
@@ -81,6 +84,7 @@ public class Ecosystem {
                 currentSimulation = null;
                 break;
             default:
+                System.out.println("Операция с таким номером не найдена!");
                 break;
         }
         
@@ -205,6 +209,9 @@ public class Ecosystem {
                 System.out.println(currentSimulation.getSimulationService().getConditions());
                 break;
             case 3:
+                break;
+            default:
+                System.out.println("Операция с таким номером не найдена!");
                 break;
         }
     }

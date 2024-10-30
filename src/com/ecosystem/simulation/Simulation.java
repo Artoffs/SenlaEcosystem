@@ -4,13 +4,16 @@ import com.ecosystem.models.*;
 import com.ecosystem.services.PredictionService;
 import com.ecosystem.services.SimulationService;
 
-import java.util.Random;
 import java.util.UUID;
+
+/**
+ * Класс, представляющий симуляцию, работает с сервисами симуляции и предсказания. Так же запускает
+ * потоки развития. Так же имеет интерфейс для изменения экосистемы.
+ */
 
 public class Simulation {
     private final SimulationService simulationService;
     private final PredictionService predictionService;
-    private final Random random = new Random();
 
     private final HerbivoreSimulation herbivoreSimulation;
     private final PredatorSimulation predatorSimulation;

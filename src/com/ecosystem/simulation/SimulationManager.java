@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Данный класс работает с симуляциями. Создает новую, продолжает существующую, а так же сохраняет текущую в папку
+ * с текущей датой.
+ */
+
 public class SimulationManager {
 
     private static final String PATH = "simulations/";

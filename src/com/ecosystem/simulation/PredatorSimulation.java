@@ -4,6 +4,10 @@ import com.ecosystem.services.SimulationService;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Класс, реализующий интерфейс Runnable. Поток развития хищных животных.
+ */
+
 public class PredatorSimulation implements Runnable {
 
     private final SimulationService simulationService;
