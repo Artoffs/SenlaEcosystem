@@ -82,7 +82,7 @@ public class Simulation {
         Thread plantThread = new Thread(plantSimulation);
         plantThread.start();
         Thread envThread = new Thread(environmentSimulation);
-       envThread.start();
+        envThread.start();
 
         herbThread.join();
         predThread.join();

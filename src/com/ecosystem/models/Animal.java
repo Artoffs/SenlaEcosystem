@@ -115,8 +115,10 @@ public class Animal {
         return new Event(String.format("%s подвигался на %d по x и на %d по у", this, moveX, moveY));
     }
 
-    public Event reproduce(List<Animal> animals, Random random) {
-        if (canReproduce && random.nextInt(100) <= 10) { // 1% шанс на размножение
+    public Event reproduce(List<Animal> animals, Random random, Environment environment) {
+        if (canReproduce && random.nextInt(100) <= 10
+                && environment.getResource(ResourceType.WATER) > 0
+                && environment.getCondition(ConditionType.TEMPERATURE) > 15) { // 1% шанс на размножение
             Animal newAnimal = new Animal(species, 50, this.positionX, this.positionY);
             animals.add(newAnimal);
             return new Event(String.format("Появился новый детеныш %s", this.getSpecies()));

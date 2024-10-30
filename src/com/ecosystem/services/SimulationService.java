@@ -142,7 +142,7 @@ public class SimulationService {
                 Logger.log(animal.drink(environment));
                 if (!animal.isAlive()) continue;
                 TimeUnit.SECONDS.sleep(1);
-                Logger.log(animal.reproduce(newAnimals, random));
+                Logger.log(animal.reproduce(newAnimals, random, environment));
                 TimeUnit.SECONDS.sleep(1);
                 if (animal.getHealth() <= 0) {
                     Logger.log(animal.die());
@@ -177,7 +177,7 @@ public class SimulationService {
                 TimeUnit.SECONDS.sleep(1);
                 Logger.log(animal.drink(environment));
                 TimeUnit.SECONDS.sleep(1);
-                Logger.log(animal.reproduce(newAnimals, random));
+                Logger.log(animal.reproduce(newAnimals, random, environment));
                 if (animal.getHealth() <= 0) {
                     Logger.log(animal.die());
                 }
@@ -187,8 +187,8 @@ public class SimulationService {
             }
         }
 
-        animalRepository.updateAnimals(newAnimals); // Добавляем новых животных в популяцию
-        animalRepository.deleteDiedAnimals(eatenAnimals); // Удаляем съеденных животных из репозитория
+        animalRepository.updateAnimals(newAnimals);
+        animalRepository.deleteDiedAnimals(eatenAnimals);
     }
 
     public void runPlantLogic() throws InterruptedException {
